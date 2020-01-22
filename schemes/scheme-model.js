@@ -6,7 +6,8 @@ module.exports = {
     findSteps,
     add,
     update,
-    remove
+    remove,
+    addStep
 }
 
 function find(){
@@ -52,4 +53,35 @@ function remove(id){
     return db('schemes')
         .where({id})
         .del()
+
+    // return findById(id)
+    //     .then(schemeRemoved => {
+    //         db('schemes')
+    //             .where({id})
+    //             .del()
+    //             .then(() => {
+    //                 return schemeRemoved;
+    //             })
+    //     })
+
+
+    // return findById(id)
+    //     .then(() => {
+    //         db('schemes')
+    //             .where({id})
+    //             .del()
+    //     })
+}
+
+function addStep(step, scheme_id){
+    const stepData = {
+        ...step,
+        scheme_id: scheme_id
+    }
+
+    return db('steps')
+        .insert(stepData)
+        .then(([id]) => {
+            return id
+        })
 }
